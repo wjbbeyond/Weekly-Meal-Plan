@@ -1,0 +1,47 @@
+
+export const translations = {
+  en: {
+    title: 'Weekly Meal Planner',
+    breakfast: 'Breakfast',
+    lunch: 'Lunch',
+    dinner: 'Dinner',
+    mon: 'Monday',
+    tue: 'Tuesday',
+    wed: 'Wednesday',
+    thu: 'Thursday',
+    fri: 'Friday',
+    sat: 'Saturday',
+    sun: 'Sunday',
+    addDish: 'Add Dish',
+    dishPlaceholder: 'Enter dish name...',
+    save: 'Save',
+    export: 'Export as Image',
+    clear: 'Clear Plan',
+    aiSuggest: 'AI Suggest',
+    selectFromLibrary: 'Select from library',
+    inputCustom: 'Custom input',
+    exportPreview: 'Export Preview'
+  },
+  zh: {
+    title: '一周菜谱计划',
+    breakfast: '早餐',
+    lunch: '中餐',
+    dinner: '晚餐',
+    mon: '星期一',
+    tue: '星期二',
+    wed: '星期三',
+    thu: '星期四',
+    fri: '星期五',
+    sat: '星期六',
+    sun: '星期天',
+    addDish: '添加菜品',
+    dishPlaceholder: '输入菜名...',
+    save: '保存',
+    export: '导出图片',
+    clear: '清空计划',
+    aiSuggest: 'AI 建议',
+    selectFromLibrary: '从菜谱选择',
+    inputCustom: '直接输入',
+    exportPreview: '导出预览'
+  }
+};
