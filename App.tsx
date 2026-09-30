@@ -4,6 +4,7 @@ import { MealType, DayOfWeek, Dish, WeeklyPlan } from './types';
 import { translations } from './translations';
 import { PlusIcon, TrashIcon, ArrowDownTrayIcon, SparklesIcon, GlobeAltIcon } from '@heroicons/react/24/outline';
 import html2canvas from 'html2canvas';
+import { readPlan, STORAGE_KEY } from './storage';
 
 const DAYS = Object.values(DayOfWeek);
 const MEALS = Object.values(MealType);
@@ -28,8 +29,14 @@ const PRESET_DISHES: Dish[] = [
 ];
 
 export default function App() {
-  const [plan, setPlan] = useState<WeeklyPlan>(INITIAL_PLAN);
-  const [lang, setLang] = useState<'zh' | 'en'>('zh');
+  const [saved] = useState(() => { try { return readPlan(localStorage); } catch { return null; } });
+  const [plan, setPlan] = useState<WeeklyPlan>(saved?.plan ?? INITIAL_PLAN);
+  const [lang, setLang] = useState<'zh' | 'en'>(saved?.lang ?? 'zh');
+  const [storageError, setStorageError] = useState(false);
+  useEffect(() => {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify({version: 1, plan, lang})); setStorageError(false); }
+    catch { setStorageError(true); }
+  }, [plan, lang]);
   const [activeCell, setActiveCell] = useState<{ day: DayOfWeek, meal: MealType } | null>(null);
   const [inputValue, setInputValue] = useState('');
   const exportRef = useRef<HTMLDivElement>(null);
@@ -80,6 +87,7 @@ export default function App() {
   return (
     <div className="min-h-screen pb-20">
       {/* Header */}
+      {storageError && <p role="alert" className="p-3 text-red-700">{lang === 'zh' ? '无法保存到浏览器；请在关闭页面前导出计划。' : 'Browser storage is unavailable. Export before closing.'}</p>}
       <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-indigo-200 shadow-lg">
@@ -274,7 +282,7 @@ export default function App() {
       {/* Floating Action Menu (Mobile Friendly) */}
       <div className="fixed bottom-6 right-6 flex flex-col gap-3">
         <button 
-          onClick={() => setPlan(INITIAL_PLAN)}
+          onClick={() => { if (window.confirm(lang === 'zh' ? '确定清空本周计划？' : 'Clear this week’s plan?')) setPlan(INITIAL_PLAN); }}
           className="p-4 bg-white border border-slate-200 text-slate-500 rounded-full shadow-lg hover:bg-red-50 hover:text-red-600 transition-all"
           title={t('clear')}
         >

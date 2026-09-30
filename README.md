@@ -1,20 +1,18 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Weekly-Meal-Plan
 
-# Run and deploy your AI Studio app
+A local weekly meal planner using preset dishes, without AI calls or API keys. Plans and language are saved in browser storage. Clearing requires confirmation. Storage may be unavailable; export before closing if a warning appears.
 
-This contains everything you need to run your app locally.
+## Develop and verify
 
-View your app in AI Studio: https://ai.studio/apps/drive/1oEo1cK7GRuDUvno-vPTvsLn5mjIjWxn_
+Node 22.13+ LTS, 24 LTS, or 26+.
 
-## Run Locally
+```sh
+npm ci
+npm run dev
+npm run typecheck
+npm test
+npm run build
+npm run preview
+```
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Tests use fake model responses and never call paid APIs. Tailwind CSS is compiled locally. Build output uses relative asset paths for static subdirectory hosting; publish only `dist/` when separately authorized. No deployment workflow is included.
